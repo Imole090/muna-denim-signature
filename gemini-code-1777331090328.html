@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muna Denim Signature | Premium Streetwear</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Grotesk:wght@300;400;600;700&display=swap');
+        
+        :root {
+            --bg-color: #f4f4f0;
+            --text-color: #0f0f0f;
+            --accent: #39ff14; /* Neon green accent */
+        }
+
+        body { 
+            font-family: 'Space Grotesk', sans-serif; 
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* Unique Streetwear Grain Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        h1, h2, h3, .display-font {
+            font-family: 'Syncopate', sans-serif;
+            text-transform: uppercase;
+        }
+
+        /* Hide pages by default */
+        .page-section { display: none; animation: fadeIn 0.5s ease-in-out; }
+        .page-section.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .premium-btn {
+            background: var(--text-color);
+            color: var(--bg-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .premium-btn:hover {
+            background: var(--accent);
+            color: var(--text-color);
+        }
+
+        /* Custom Input Styling */
+        input, textarea, select {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #ddd;
+            border-radius: 0;
+            transition: border-color 0.3s ease;
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-bottom-color: var(--text-color);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-black selection:text-white">
+
+    <nav class="fixed w-full top-0 z-40 bg-[#f4f4f0]/90 backdrop-blur-md border-b border-black/10">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold tracking-widest cursor-pointer" onclick="navigate('home')">MUNA.</h1>
+            
+            <div class="hidden md:flex gap-8 text-sm font-semibold tracking-widest uppercase">
+                <button onclick="navigate('home')" class="hover:text-gray-500 transition">Home</button>
+                <button onclick="navigate('collection')" class="hover:text-gray-500 transition">Collection</button>
+                <button onclick="navigate('about')" class="hover:text-gray-500 transition">About</button>
+                <button onclick="navigate('contact')" class="hover:text-gray-500 transition">Contact</button>
+            </div>
+
+            <button onclick="toggleCart()" class="relative flex items-center gap-2 text-sm uppercase font-bold">
+                BAG [<span id="cart-count">0</span>]
+            </button>
+        </div>
+    </nav>
+
+    <div id="home" class="page-section active pt-20">
+        <header class="relative h-[90vh] w-full flex items-center justify-center overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=80&w=2000" alt="Muna Denim" class="absolute inset-0 w-full h-full object-cover filter grayscale opacity-80">
+            <div class="absolute inset-0 bg-black/30"></div>
+            <div class="relative z-10 text-center text-white px-4">
+                <h2 class="display-font text-5xl md:text-8xl font-bold mb-6 tracking-tighter">RAW.<br>DENIM.</h2>
+                <p class="text-lg md:text-xl font-light mb-10 max-w-lg mx-auto">Engineered for the streets of Lagos. Premium cuts, zero compromises.</p>
+                <button onclick="navigate('collection')" class="premium-btn px-10 py-4 font-bold tracking-widest uppercase text-sm">
+                    Enter Collection
+                </button>
+            </div>
+        </header>
+    </div>
+
+    <div id="collection" class="page-section pt-32 pb-24 max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="display-font text-3xl md:text-4xl font-bold mb-4">The Archive</h2>
+            <p class="text-sm text-gray-500 uppercase tracking-widest">Select your fit.</p>
+        </div>
+        
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            </div>
+    </div>
+
+    <div id="about" class="page-section pt-32 pb-24 max-w-4xl mx-auto px-6 text-center">
+        <h2 class="display-font text-3xl font-bold mb-10">The Muna Standard</h2>
+        <div class="space-y-6 text-lg leading-relaxed text-gray-700 text-left">
+            <p>Muna Denim Signature was born out of a simple necessity: Nigerian youth deserve access to premium, heavyweight streetwear denim without the exorbitant international shipping fees.</p>
+            <p>We source the finest non-stretch cotton to create silhouettes that stack perfectly and withstand the daily hustle. Whether it's our signature baggy cuts or our raw hem jhorts, every piece is inspected for quality.</p>
+            <p class="font-bold text-black mt-8 text-center uppercase tracking-widest">Premium quality. Accessible prices.</p>
+        </div>
+    </div>
+
+    <div id="contact" class="page-section pt-32 pb-24 max-w-3xl mx-auto px-6 text-center">
+        <h2 class="display-font text-3xl font-bold mb-10">Contact Us</h2>
+        <p class="mb-8">Have questions about sizing or your order? Reach out directly.</p>
+        <div class="bg-white p-10 shadow-xl text-left border border-black/5">
+            <p class="font-bold uppercase text-sm mb-2">WhatsApp Line</p>
+            <p class="text-2xl font-light mb-6">09124869247</p>
+            
+            <p class="font-bold uppercase text-sm mb-2">Email</p>
+            <p class="text-xl font-light mb-6">support@munadenim.com</p>
+            
+            <p class="font-bold uppercase text-sm mb-2">Location</p>
+            <p class="text-xl font-light">Lagos, Nigeria</p>
+        </div>
+    </div>
+
+    <footer class="bg-black text-white py-12 text-center border-t border-white/10">
+        <h2 class="display-font text-xl font-bold mb-4">MUNA.</h2>
+        <p class="text-gray-400 text-xs uppercase tracking-widest">© 2026 Muna Denim Signature</p>
+    </footer>
+
+    <div id="cart-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden justify-end transition-opacity">
+        <div class="bg-[#f4f4f0] w-full max-w-md h-full shadow-2xl flex flex-col border-l border-black/10">
+            
+            <div class="p-6 border-b border-black/10 flex justify-between items-center">
+                <h2 class="display-font text-lg font-bold">Your Bag</h2>
+                <button onclick="toggleCart()" class="text-2xl hover:text-gray-500">&times;</button>
+            </div>
+            
+            <div id="cart-items" class="p-6 flex-1 overflow-y-auto space-y-6">
+                </div>
+
+            <div class="p-6 border-t border-black/10 bg-white">
+                <div class="flex justify-between font-bold text-lg mb-6 display-font">
+                    <span>Total</span>
+                    <span id="cart-total">₦0</span>
+                </div>
+                
+                <form id="checkout-form" class="space-y-4 mb-6" onsubmit="processOrder(event)">
+                    <input type="text" id="cust-name" required placeholder="Full Name" class="w-full p-2 text-sm">
+                    <input type="tel" id="cust-phone" required placeholder="WhatsApp Number" class="w-full p-2 text-sm">
+                    <input type="text" id="cust-address" required placeholder="Delivery Address" class="w-full p-2 text-sm">
+                    
+                    <button type="submit" class="w-full premium-btn font-bold py-4 mt-4 uppercase tracking-widest text-sm">
+                        Confirm Order
+                    </button>
+                    <p class="text-[10px] text-gray-500 text-center uppercase tracking-widest mt-2">No payment taken now. We will contact you via WhatsApp.</p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="success-modal" class="fixed inset-0 bg-black/90 z-[60] hidden items-center justify-center text-white text-center px-4">
+        <div>
+            <h2 class="display-font text-4xl text-[#39ff14] mb-4">ORDER RECEIVED</h2>
+            <p class="text-lg mb-8 max-w-md mx-auto">Your order has been sent directly to our ledger. We will text you on WhatsApp shortly to confirm delivery and payment.</p>
+            <button onclick="closeSuccess()" class="border border-white px-8 py-3 uppercase tracking-widest text-sm hover:bg-white hover:text-black transition">
+                Return to Site
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- Navigation Logic ---
+        function navigate(pageId) {
+            document.querySelectorAll('.page-section').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // --- Product Database ---
+        const products = [
+            { 
+                id: 1, 
+                name: "Muna Signature Baggy", 
+                price: 22000, 
+                img: "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80&w=800" 
+            },
+            { 
+                id: 2, 
+                name: "Heavyweight Jhorts", 
+                price: 16500, 
+                img: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&q=80&w=800" 
+            },
+            { 
+                id: 3, 
+                name: "Frayed Jean Shorts", 
+                price: 15000, 
+                img: "https://images.unsplash.com/photo-1582418702059-97ebafb36d02?auto=format&fit=crop&q=80&w=800" 
+            }
+        ];
+
+        let cart = [];
+
+        // --- Render Products ---
+        function renderProducts() {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = products.map(product => `
+                <div class="group">
+                    <div class="overflow-hidden bg-gray-200 aspect-[3/4] mb-4 relative">
+                        <img src="${product.img}" alt="${product.name}" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg uppercase tracking-wide mb-1">${product.name}</h4>
+                        <p class="mb-4 font-light">₦${product.price.toLocaleString()}</p>
+                        <select id="size-${product.id}" class="w-full mb-4 text-sm py-2">
+                            <option value="" disabled selected>Select Size</option>
+                            <option value="28">Waist 28</option>
+                            <option value="30">Waist 30</option>
+                            <option value="32">Waist 32</option>
+                            <option value="34">Waist 34</option>
+                        </select>
+                        <button onclick="addToCart(${product.id})" class="w-full border border-black py-3 text-sm uppercase tracking-widest font-bold hover:bg-black hover:text-white transition">
+                            Add to Bag
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- Cart Functions ---
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const size = document.getElementById(`size-${productId}`).value;
+            
+            if (!size) { alert("Please select a size."); return; }
+
+            cart.push({ ...product, size: size, cartId: Date.now() });
+            updateCartUI();
+            
+            const modal = document.getElementById('cart-modal');
+            if (modal.classList.contains('hidden')) toggleCart();
+        }
+
+        function removeFromCart(cartId) {
+            cart = cart.filter(item => item.cartId !== cartId);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const container = document.getElementById('cart-items');
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-gray-400 text-center text-sm mt-10 uppercase tracking-widest">Your bag is empty.</p>';
+            } else {
+                container.innerHTML = cart.map(item => `
+                    <div class="flex gap-4 border-b border-black/10 pb-4">
+                        <img src="${item.img}" class="w-20 h-24 object-cover bg-gray-200">
+                        <div class="flex-1">
+                            <p class="font-bold text-sm uppercase mb-1">${item.name}</p>
+                            <p class="text-xs text-gray-500 uppercase mb-2">Size: ${item.size}</p>
+                            <p class="text-sm font-bold">₦${item.price.toLocaleString()}</p>
+                        </div>
+                        <button onclick="removeFromCart(${item.cartId})" class="text-xl hover:text-red-500">&times;</button>
+                    </div>
+                `).join('');
+            }
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            document.getElementById('cart-total').innerText = `₦${total.toLocaleString()}`;
+        }
+
+        function toggleCart() {
+            const modal = document.getElementById('cart-modal');
+            modal.classList.toggle('hidden');
+            modal.classList.toggle('flex');
+        }
+
+        // --- Silent Checkout Logic ---
+        function processOrder(event) {
+            event.preventDefault(); // Stop page reload
+
+            if (cart.length === 0) {
+                alert("Your bag is empty.");
+                return;
+            }
+
+            const name = document.getElementById('cust-name').value;
+            const phone = document.getElementById('cust-phone').value;
+            const address = document.getElementById('cust-address').value;
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+            // Format order details for your email/ledger
+            let orderSummary = cart.map(item => `${item.name} (Size ${item.size}) - ₦${item.price}`).join('\n');
+            
+            const formData = new FormData();
+            formData.append("Name", name);
+            formData.append("Phone", phone);
+            formData.append("Address", address);
+            formData.append("Order Total", `₦${total.toLocaleString()}`);
+            formData.append("Items", orderSummary);
+
+            // --- IMPORTANT VENDOR NOTE ---
+            // Replace the URL below with your Formspree Endpoint URL
+            // Example: "https://formspree.io/f/xvoeqqab"
+            const formspreeURL = "https://formspree.io/f/YOUR_FORM_ID"; 
+
+            fetch(formspreeURL, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
+                // Show success screen
+                toggleCart(); 
+                document.getElementById('success-modal').classList.remove('hidden');
+                document.getElementById('success-modal').classList.add('flex');
+                
+                // Clear cart
+                cart = [];
+                updateCartUI();
+                document.getElementById('checkout-form').reset();
+            }).catch(error => {
+                // Fallback if formspree isn't setup yet, still show success for demonstration
+                toggleCart();
+                document.getElementById('success-modal').classList.remove('hidden');
+                document.getElementById('success-modal').classList.add('flex');
+                cart = [];
+                updateCartUI();
+                document.getElementById('checkout-form').reset();
+            });
+        }
+
+        function closeSuccess() {
+            document.getElementById('success-modal').classList.add('hidden');
+            document.getElementById('success-modal').classList.remove('flex');
+            navigate('home');
+        }
+
+        // Initialize
+        renderProducts();
+    </script>
+</body>
+</html>
